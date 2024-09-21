@@ -33,8 +33,11 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public List<Student> getStudents() {
-        return studentRepository.findAllOrderBy("documentNumber");
+    public List<Student> getStudents(String orderBy) {
+        if(!ValidatorFactory.getValidator("studentAttribute").isValid(orderBy)) {
+            throw new IllegalArgumentException("No se puede ordenar por el atributo " + orderBy);
+        }
+        return studentRepository.findAllOrderBy(orderBy);
     }
 
 }

@@ -8,6 +8,8 @@ public final class ValidatorFactory {
         switch (attribute) {
             case "gender":
                 return GenderValidator.getInstance();
+            case "studentAttribute":
+                return new StudentAttributeValidator();
             default:
                 throw new IllegalArgumentException("No se encontró un validador para el atributo " + attribute);
         }

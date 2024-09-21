@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.unicen.tp2.schema.Student;
@@ -24,8 +25,8 @@ public class StudentRestController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public List<Student> getStudents(@RequestParam(name = "order_by", required = false, defaultValue = "id") String orderBy) {
+        return studentService.getStudents(orderBy);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
