@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.unicen.tp2.schema.Student;
+import edu.unicen.tp2.schema.StudentCareer;
 import edu.unicen.tp2.services.StudentService;
 
 @RestController
@@ -40,5 +41,14 @@ public class StudentRestController {
         String city = student.get("cityOfResidence");
 
         return studentService.createStudent(fn, ln, age, dn, ubn, gender, city);
+    }
+
+    
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "addToCarreer")
+    public StudentCareer addStudenToCarreer(@RequestBody Map<String, String> studentCarreerId) {
+        
+        var studentId = Long.parseLong(studentCarreerId.get("studentId"));
+        var carreerId = Long.parseLong(studentCarreerId.get("carreerId"));
+        return studentService.addStudentToCareer(studentId, carreerId);
     }
 }
