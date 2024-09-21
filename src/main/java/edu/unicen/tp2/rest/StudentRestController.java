@@ -1,58 +1,43 @@
 package edu.unicen.tp2.rest;
 
-import edu.unicen.tp2.repository.StudentsRepository;
-import edu.unicen.tp2.schema.Student;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import edu.unicen.tp2.schema.Student;
+import edu.unicen.tp2.services.StudentService;
 
 @RestController
 @RequestMapping("/students")
 public class StudentRestController {
-    @Autowired
-    private StudentsRepository studentsRepository;
+    private StudentService studentService;
+
+    StudentRestController(StudentService studentService) {
+        // Agregamos las dependencias por constructor
+        this.studentService = studentService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Student> getStudents() {
-        return studentsRepository.findAllOrderBy("documentNumber");
+        return studentService.getStudents();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addStudents() {
-        Student st;
-        st = new Student();
-        st.setFirstName("Juan");
-        st.setLastName("Perez");
-        st.setAge(20);
-        st.setDocumentNumber("12345678");
-        st.setGender("Male");
-        st.setCityOfResidence("Rosario");
-        st.setUniversityBookNumber("123456");
-        studentsRepository.save(st);
+    public Student addStudents(@RequestBody Map<String, String> student) {
+        String fn = student.get("firstName");
+        String ln = student.get("lastName");
+        int age = Integer.parseInt(student.get("age"));
+        String dn = student.get("documentNumber");
+        String ubn = student.get("universityBookNumber");
+        String gender = student.get("gender");
+        String city = student.get("cityOfResidence");
 
-        st = new Student();
-        st.setFirstName("Maria");
-        st.setLastName("Perez");
-        st.setAge(18);
-        st.setDocumentNumber("654654654");
-        st.setGender("Female");
-        st.setCityOfResidence("Rosario");
-        st.setUniversityBookNumber("2335465465");
-        studentsRepository.save(st);
-
-        st = new Student();
-        st.setFirstName("Luis");
-        st.setLastName("Rodriguez");
-        st.setAge(15);
-        st.setDocumentNumber("001321354687");
-        st.setGender("Male");
-        st.setCityOfResidence("Buenos Aires");
-        st.setUniversityBookNumber("00654654654");
-        studentsRepository.save(st);
+        return studentService.createStudent(fn, ln, age, dn, ubn, gender, city);
     }
 }

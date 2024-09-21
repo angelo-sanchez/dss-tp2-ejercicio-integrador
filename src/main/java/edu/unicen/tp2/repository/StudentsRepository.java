@@ -21,7 +21,8 @@ public class StudentsRepository {
     }
 
     @Transactional
-    public void save(Student student) {
+    public Student save(Student student) {
         entityManager.persist(student);
+        return student;
     }
 }
