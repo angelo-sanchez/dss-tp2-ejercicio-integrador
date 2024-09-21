@@ -26,6 +26,22 @@ public class StudentsRepository {
         return entityManager.find(Student.class, id);
     }
 
+    public Student findOneByUniversityBookNumber(String universityBookNumber){
+
+
+    try {
+        return entityManager.createQuery(
+            "SELECT s FROM Student s WHERE s.universityBookNumber = :universityBookNumber", Student.class)
+            .setParameter("universityBookNumber", universityBookNumber)
+            .getSingleResult();
+    } catch (Exception e) {
+        return null;
+    }
+
+    }
+
+
+
     @Transactional
     public Student save(Student student) {
         entityManager.persist(student);

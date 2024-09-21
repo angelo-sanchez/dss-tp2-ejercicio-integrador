@@ -51,4 +51,9 @@ public class StudentRestController {
         var carreerId = Long.parseLong(studentCarreerId.get("carreerId"));
         return studentService.addStudentToCareer(studentId, carreerId);
     }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getStudentByBookNumber")
+    public Student getStudentByBookNumber(@RequestParam(name = "book_number", required = true) String bookNumber) {
+        return studentService.getStudentByUniversityBookNumber(bookNumber);
+    }
 }

@@ -53,8 +53,11 @@ public class StudentService {
         
         var studentCareer = new StudentCareer();
 
-        Career career = carreerRepository.findById(careerId)
-        .orElseThrow(() -> new IllegalArgumentException("Carrera invalida"));
+        Career career = carreerRepository.findById(careerId);
+
+        if(career == null){
+            throw new IllegalArgumentException("Carrera invalida");
+        }
 
         Student student = studentRepository.findById(studentId);
 
@@ -77,9 +80,11 @@ public class StudentService {
         studentRepository.saveStudentCareer(studentCareer);
 
         return studentCareer;
+   
+    }
 
-
-        
+    public Student getStudentByUniversityBookNumber(String universityBookNumber){
+        return studentRepository.findOneByUniversityBookNumber(universityBookNumber);
     }
 
 }
