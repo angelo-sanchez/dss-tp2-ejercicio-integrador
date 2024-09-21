@@ -18,6 +18,10 @@ public class StudentService {
 
     public Student createStudent(String firstName, String lastName, int age, String documentNumber,
             String universityBookNumber, String gender, String cityOfResidence) {
+        if (!ValidatorFactory.getValidator("gender").isValid(gender)) {
+            throw new IllegalArgumentException("El género no es válido");
+        }
+
         var student = new Student();
         student.setFirstName(firstName);
         student.setLastName(lastName);
