@@ -20,7 +20,7 @@ public class CareerRestController {
         this.careerService = careerService;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "tesst")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCareers") // Agregue el path extra porque sino /careers solo me da 404
     public List<CareerInscriptsDTO> getCareers() {
         return careerService.findCareersWithStudentCount();
     }
