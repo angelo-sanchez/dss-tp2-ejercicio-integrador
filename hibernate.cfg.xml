@@ -1,0 +1,26 @@
+<!DOCTYPE hibernate-configuration PUBLIC 
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuración de la base de datos -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/tp2?schema=tp2</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">1234</property>
+
+        <!-- Dialecto de Hibernate -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Opciones adicionales -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property> <!-- Crear/Actualizar tablas automáticamente -->
+
+        <!-- Clases mapeadas -->
+        <mapping class="edu.unicen.tp2.schema.Career"/>
+        <mapping class="edu.unicen.tp2.schema.Student"/>
+        <mapping class="edu.unicen.tp2.schema.StudentCareer"/>
+        <mapping class="edu.unicen.tp2.schema.StudentCareerId"/>
+
+    </session-factory>
+</hibernate-configuration>
