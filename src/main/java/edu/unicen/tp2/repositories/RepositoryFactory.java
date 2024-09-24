@@ -1,7 +1,6 @@
-package edu.unicen.tp2.repositories.factories;
+package edu.unicen.tp2.repositories;
 
-import edu.unicen.tp2.repositories.CareerRepository;
-import edu.unicen.tp2.repositories.StudentsRepository;
+import edu.unicen.tp2.repositories.impl.postgres.PostgreSqlRepositoryFactory;
 
 public abstract class RepositoryFactory {
     

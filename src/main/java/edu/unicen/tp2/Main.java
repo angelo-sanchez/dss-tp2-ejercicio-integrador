@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.unicen.tp2.repositories.CareerRepository;
-import edu.unicen.tp2.repositories.factories.RepositoryFactory;
+import edu.unicen.tp2.repositories.RepositoryFactory;
 import edu.unicen.tp2.schema.Career;
 
 public class Main {

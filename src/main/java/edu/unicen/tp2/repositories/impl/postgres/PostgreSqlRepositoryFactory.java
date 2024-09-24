@@ -1,11 +1,11 @@
-package edu.unicen.tp2.repositories.factories;
+package edu.unicen.tp2.repositories.impl.postgres;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.unicen.tp2.repositories.CareerRepository;
-import edu.unicen.tp2.repositories.CareerRepositoryPostgre;
+import edu.unicen.tp2.repositories.RepositoryFactory;
 import edu.unicen.tp2.repositories.StudentsRepository;
 
 public class PostgreSqlRepositoryFactory extends RepositoryFactory {
@@ -27,7 +27,7 @@ public class PostgreSqlRepositoryFactory extends RepositoryFactory {
 
         var session = openConnection();
         
-        return new CareerRepositoryPostgre(session);
+        return new CareerRepositoryPostgres(session);
     }
     
 }

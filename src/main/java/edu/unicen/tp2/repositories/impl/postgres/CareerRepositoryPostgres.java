@@ -1,16 +1,16 @@
-package edu.unicen.tp2.repositories;
+package edu.unicen.tp2.repositories.impl.postgres;
 
 import java.util.List;
 
 import org.hibernate.Session;
-
+import edu.unicen.tp2.repositories.CareerRepository;
 import edu.unicen.tp2.schema.Career;
 
-public class CareerRepositoryPostgre implements CareerRepository {
+public class CareerRepositoryPostgres implements CareerRepository {
 
     Session session;
 
-    public CareerRepositoryPostgre(Session session) {
+    public CareerRepositoryPostgres(Session session) {
         this.session = session;
     }
 
