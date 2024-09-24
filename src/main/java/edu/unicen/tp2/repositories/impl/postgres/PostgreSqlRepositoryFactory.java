@@ -18,8 +18,8 @@ public class PostgreSqlRepositoryFactory extends RepositoryFactory {
 
     @Override
     public StudentsRepository getStudentsRepository() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentsRepository'");
+        var session = openConnection();
+        return new StudentsRepositoryPostgres(session);
     }
 
     @Override
