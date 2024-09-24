@@ -1,7 +1,0 @@
-com\example\facultad\DAO\DaoFactory.class
-com\example\facultad\DAO\PersonDAO.class
-com\example\facultad\Main.class
-com\example\facultad\DAO\PersonDTO.class
-com\example\facultad\DAO\PostgreSqlDaoFactory.class
-com\example\facultad\DAO\PostgreSqlPersonDAO.class
-com\example\facultad\ConexionSimple.class
