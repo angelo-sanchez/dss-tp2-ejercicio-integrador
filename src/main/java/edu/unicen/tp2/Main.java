@@ -1,5 +1,6 @@
 package edu.unicen.tp2;
 
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.unicen.tp2.repositories.CareerRepository;
@@ -24,17 +25,67 @@ public class Main {
             /* Inicializamos los services */
             StudentService studentServices = new StudentService(studentsRepository);
 
-            // b.1) dar de alta un estudiante
-            Student student = studentServices.createStudent("Juan", "Perez", 20, "987987987", "2494", "M", "Rosario");
-            log.info("Se creó el estudiante con id: {}", student.getId());
-
-
             Career career = careerRepository.findById(1);
             
             System.out.println(career.getName());
-        
+
+            /* Ejecutamos los métodos */
+            // darDeAltaEstudiante(studentServices);
+            recuperarEstudiantesOrdenado(studentServices, "lastName");
+            recuperarEstudiantesPorGenero(studentServices, "Male");
+            recuperarEstudiantesPorCarreraYCiudad(studentServices, 1, "Olavarria");
         } catch (Exception e) {
             log.error("Ocurrió un error en la ejecución del programa", e);
         }
+    }
+
+    /**
+     * b.1) dar de alta un estudiante.
+     */
+    public static void darDeAltaEstudiante(StudentService sv) {
+        Student s = sv.createStudent(
+            "Juan",
+            "Perez",
+            20,
+            "987987987",
+            "2494",
+            "Male",
+            "Rosario"
+        );
+        var data = String.format("%s %s - (%s)", s.getFirstName(), s.getLastName(), s.getDocumentNumber());
+        log.info("Se creó el estudiante {} con id: {}",data, s.getId());
+    }
+
+    /**
+     * b.3) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+     */
+    public static void recuperarEstudiantesOrdenado(StudentService sv, String orderBy) {
+        var students = sv
+                .getStudents(orderBy).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes ordenados por {}: {}", orderBy, students);
+    }
+
+    /**
+     * b.5) recuperar todos los estudiantes, en base a su género.
+     */
+    public static void recuperarEstudiantesPorGenero(StudentService sv, String gender) {
+        var students = sv
+                .findByGender(gender).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes de género {}: {}", gender, students);
+    }
+
+    /**
+     * b.7) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia
+     */
+    public static void recuperarEstudiantesPorCarreraYCiudad(StudentService sv, long careerId, String city) {
+        var students = sv
+                .findByCareerAndCity(careerId, city).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes de la carrera {} que viven en {}: {}", careerId, city, students);
     }
 }
