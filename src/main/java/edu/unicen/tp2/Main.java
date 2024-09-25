@@ -60,4 +60,15 @@ public class Main {
                 .collect(Collectors.joining(" *** "));
         log.info("Estudiantes de género {}: {}", gender, students);
     }
+
+    /**
+     * b.7) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia
+     */
+    public static void recuperarEstudiantesPorCarreraYCiudad(StudentService sv, long careerId, String city) {
+        var students = sv
+                .findByCareerAndCity(careerId, city).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes de la carrera {} que viven en {}: {}", careerId, city, students);
+    }
 }

@@ -42,4 +42,8 @@ public class StudentService {
         }
         return studentRepository.findAllByGender(gender);
     }
+
+    public List<Student> findByCareerAndCity(Long careerId, String city) {
+        return studentRepository.findAllByCareerAndCity(careerId, city);
+    }
 }

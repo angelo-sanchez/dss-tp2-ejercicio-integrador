@@ -31,6 +31,15 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
     }
 
     @Override
+    public List<Student> findAllByCareerAndCity(Long careerId, String city) {
+        String sql = "SELECT s FROM Student s JOIN s.studentCareers sc WHERE sc.career.id = :careerId AND s.cityOfResidence = :city";
+        Query<Student> query = session.createQuery(sql, Student.class);
+        query.setParameter("careerId", careerId);
+        query.setParameter("city", city);
+        return query.getResultList();
+    }
+
+    @Override
     public Student findById(long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");

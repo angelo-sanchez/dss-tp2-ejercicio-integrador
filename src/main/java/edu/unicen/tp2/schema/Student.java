@@ -1,5 +1,6 @@
 package edu.unicen.tp2.schema;
 
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,6 +31,17 @@ public class Student {
 
     @Column(name = "university_book_number", nullable = false, length = Integer.MAX_VALUE)
     private String universityBookNumber;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<StudentCareer> studentCareers;
+
+    public List<StudentCareer> getStudentCareers() {
+        return studentCareers;
+    }
+
+    public void setStudentCareers(List<StudentCareer> studentCareers) {
+        this.studentCareers = studentCareers;
+    }
 
     public Long getId() {
         return id;
