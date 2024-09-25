@@ -25,18 +25,35 @@ public class Main {
             /* Inicializamos los services */
             StudentService studentServices = new StudentService(studentsRepository);
 
-            // b.1) dar de alta un estudiante
-            /* Student student = studentServices.createStudent("Juan", "Perez", 20, "987987987", "2494", "M", "Rosario");
-            log.info("Se creó el estudiante con id: {}", student.getId()); */
-
-
             Career career = careerRepository.findById(1);
             
             System.out.println(career.getName());
-        
+
+            /* Ejecutamos los métodos */
+            // darDeAltaEstudiante(studentServices);
+            recuperarEstudiantesOrdenado(studentServices, "lastName");
+            recuperarEstudiantesPorGenero(studentServices, "Male");
+            recuperarEstudiantesPorCarreraYCiudad(studentServices, 1, "Olavarria");
         } catch (Exception e) {
             log.error("Ocurrió un error en la ejecución del programa", e);
         }
+    }
+
+    /**
+     * b.1) dar de alta un estudiante.
+     */
+    public static void darDeAltaEstudiante(StudentService sv) {
+        Student s = sv.createStudent(
+            "Juan",
+            "Perez",
+            20,
+            "987987987",
+            "2494",
+            "Male",
+            "Rosario"
+        );
+        var data = String.format("%s %s - (%s)", s.getFirstName(), s.getLastName(), s.getDocumentNumber());
+        log.info("Se creó el estudiante {} con id: {}",data, s.getId());
     }
 
     /**
