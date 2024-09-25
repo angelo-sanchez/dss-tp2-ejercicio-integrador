@@ -64,16 +64,4 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
         return student;
     }
 
-    @Override
-    public StudentCareer saveStudentCareer(StudentCareer studentCareer) {
-
-        Transaction tx = session.beginTransaction();
-
-        session.persist(studentCareer);
-
-        tx.commit();
-
-        return studentCareer;
-    }
-
 }

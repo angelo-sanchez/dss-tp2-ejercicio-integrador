@@ -26,4 +26,12 @@ public class CareerInscriptsDTO {
     public void setEnrolledCount(long enrolledCount) {
         this.enrolledCount = enrolledCount;
     }
+    @Override
+public String toString() {
+    return "{" +
+            "career=" + career.getName() + // Asegúrate de que Career tenga un método getName() u otro identificador
+            ", enrolledCount=" + enrolledCount +
+            '}';
+}
+
 }

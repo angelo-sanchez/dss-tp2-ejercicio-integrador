@@ -12,5 +12,4 @@ public interface StudentsRepository {
     public Student findById(long id);
     public Student findOneByUniversityBookNumber(String universityBookNumber);
     public Student save(Student student);
-    public StudentCareer saveStudentCareer(StudentCareer studentCareer);
 }

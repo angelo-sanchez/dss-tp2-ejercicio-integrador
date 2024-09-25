@@ -12,6 +12,10 @@ public abstract class RepositoryFactory {
 
     public abstract CareerRepository getCareerRepository();
 
+    public abstract StudentCareerRepository getStudentCareerRepository();
+
+    public abstract void closeConnection();
+
     public static RepositoryFactory getRepositoryFactory(int witchFactory){
 
         // Switch - Case. devolviendo instancia correspondiente al parametro.
@@ -28,4 +32,6 @@ public abstract class RepositoryFactory {
         
         return null;
     }
+
+    
 }

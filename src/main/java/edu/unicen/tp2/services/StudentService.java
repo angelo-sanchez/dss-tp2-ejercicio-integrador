@@ -49,4 +49,8 @@ public class StudentService {
     public List<Student> findByCareerAndCity(Long careerId, String city) {
         return studentRepository.findAllByCareerAndCity(careerId, city);
     }
+
+    public Student findOneByUniversityBookNumber(String universityBookNumber){
+        return studentRepository.findOneByUniversityBookNumber(universityBookNumber);
+    }
 }

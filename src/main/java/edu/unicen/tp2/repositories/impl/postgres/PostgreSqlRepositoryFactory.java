@@ -6,14 +6,26 @@ import org.hibernate.cfg.Configuration;
 
 import edu.unicen.tp2.repositories.CareerRepository;
 import edu.unicen.tp2.repositories.RepositoryFactory;
+import edu.unicen.tp2.repositories.StudentCareerRepository;
 import edu.unicen.tp2.repositories.StudentsRepository;
 
 public class PostgreSqlRepositoryFactory extends RepositoryFactory {
 
+    private Session session;
+
     public Session openConnection(){
+
+        if(session != null) return session;
+
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         
-        return sessionFactory.openSession();
+        session = sessionFactory.openSession();
+
+        return session;
+    }
+
+    public void closeConnection(){
+        session.close();
     }
 
     @Override
@@ -24,10 +36,16 @@ public class PostgreSqlRepositoryFactory extends RepositoryFactory {
 
     @Override
     public CareerRepository getCareerRepository() {
-
         var session = openConnection();
-        
         return new CareerRepositoryPostgres(session);
+    }
+
+    @Override
+    public StudentCareerRepository getStudentCareerRepository() {
+        
+        var session = openConnection();
+
+        return new StudentCareerRepositoryPostgres(session);
     }
     
 }
