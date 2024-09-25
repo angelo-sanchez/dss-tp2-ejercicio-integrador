@@ -22,16 +22,20 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
 
     @Override
     public Student findById(long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return session.find(Student.class, id);
     }
 
     @Override
     public Student findOneByUniversityBookNumber(String universityBookNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-                "Unimplemented method 'findOneByUniversityBookNumber'");
-    }
+            try {
+                return session.createQuery(
+                    "SELECT s FROM Student s WHERE s.universityBookNumber = :universityBookNumber", Student.class)
+                    .setParameter("universityBookNumber", universityBookNumber)
+                    .uniqueResult();
+            } catch (Exception e) {
+                return null; // En caso de que haya una excepción, retornamos null
+            } 
+        }
 
     @Override
     public Student save(Student student) {
@@ -43,8 +47,14 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
 
     @Override
     public StudentCareer saveStudentCareer(StudentCareer studentCareer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveStudentCareer'");
+
+        Transaction tx = session.beginTransaction();
+
+        session.persist(studentCareer);
+
+        tx.commit();
+
+        return studentCareer;
     }
 
 }

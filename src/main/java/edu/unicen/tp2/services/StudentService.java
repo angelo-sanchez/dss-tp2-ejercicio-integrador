@@ -1,10 +1,15 @@
 package edu.unicen.tp2.services;
 
+import edu.unicen.tp2.repositories.CareerRepository;
 import edu.unicen.tp2.repositories.StudentsRepository;
+import edu.unicen.tp2.schema.Career;
 import edu.unicen.tp2.schema.Student;
+import edu.unicen.tp2.schema.StudentCareer;
+import edu.unicen.tp2.schema.StudentCareerId;
 
 public class StudentService {
     private StudentsRepository studentRepository;
+    private CareerRepository careerRepository;
 
     public StudentService(StudentsRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -22,4 +27,6 @@ public class StudentService {
         student.setCityOfResidence(cityOfResidence);
         return studentRepository.save(student);
     }
+
+
 }
