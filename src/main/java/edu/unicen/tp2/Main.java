@@ -1,5 +1,6 @@
 package edu.unicen.tp2;
 
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.unicen.tp2.repositories.CareerRepository;
@@ -25,8 +26,8 @@ public class Main {
             StudentService studentServices = new StudentService(studentsRepository);
 
             // b.1) dar de alta un estudiante
-            Student student = studentServices.createStudent("Juan", "Perez", 20, "987987987", "2494", "M", "Rosario");
-            log.info("Se creó el estudiante con id: {}", student.getId());
+            /* Student student = studentServices.createStudent("Juan", "Perez", 20, "987987987", "2494", "M", "Rosario");
+            log.info("Se creó el estudiante con id: {}", student.getId()); */
 
 
             Career career = careerRepository.findById(1);
@@ -36,5 +37,16 @@ public class Main {
         } catch (Exception e) {
             log.error("Ocurrió un error en la ejecución del programa", e);
         }
+    }
+
+    /**
+     * b.3) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+     */
+    public static void recuperarEstudiantesOrdenado(StudentService sv, String orderBy) {
+        var students = sv
+                .getStudents(orderBy).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes ordenados por {}: {}", orderBy, students);
     }
 }

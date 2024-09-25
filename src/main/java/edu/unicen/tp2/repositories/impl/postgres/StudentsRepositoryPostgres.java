@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import edu.unicen.tp2.repositories.StudentsRepository;
 import edu.unicen.tp2.schema.Student;
 import edu.unicen.tp2.schema.StudentCareer;
+import jakarta.persistence.TypedQuery;
 
 public class StudentsRepositoryPostgres implements StudentsRepository {
     private final Session session;
@@ -16,8 +17,9 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
 
     @Override
     public List<Student> findAllOrderBy(String fieldName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllOrderBy'");
+        TypedQuery<Student> query = session.createQuery(
+                "SELECT s FROM Student s ORDER BY s." + fieldName, Student.class);
+        return query.getResultList();
     }
 
     @Override
