@@ -32,10 +32,7 @@ public class Main {
             StudentService studentServices = new StudentService(studentsRepository);
             StudentCareerService studentCareerService = new StudentCareerService(studentsRepository, careerRepository, studentCareerRepository);
 
-            Career career = careerRepository.findById(1);
-            
-            System.out.println(career.getName());
-
+            //matricularEstudianteCarrera(studentCareerService, 2, 1); // La carrera debe estar previamente creada.
 
             /* Ejecutamos los métodos */
             darDeAltaEstudiante(studentServices);
@@ -45,6 +42,8 @@ public class Main {
             recuperarEstudiantesPorGenero(studentServices, "Male");
             carrerasInscriptosOrdenada(careerService);
             recuperarEstudiantesPorCarreraYCiudad(studentServices, 1, "Olavarria");
+            generarReporteCarreras(careerService);
+
 
 
             repositoryFactory.closeConnection();
@@ -147,5 +146,16 @@ public class Main {
                         s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
                 .collect(Collectors.joining(" *** "));
         log.info("Estudiantes de la carrera {} que viven en {}: {}", careerId, city, students);
+    }
+
+    /**
+     * c) Generar un reporte de las carreras, que para cada carrera incluya información de los inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar los años de manera cronológica
+     */
+
+    public static void generarReporteCarreras(CareerService cr) {
+
+        var results = cr.reportCareerWithStudentsInfo();
+
+        log.info(results.toString());
     }
 }

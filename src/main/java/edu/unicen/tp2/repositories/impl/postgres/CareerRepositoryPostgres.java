@@ -7,8 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import edu.unicen.tp2.dto.CareerInscriptsDTO;
+import edu.unicen.tp2.dto.CareerReportDTO;
 import edu.unicen.tp2.repositories.CareerRepository;
 import edu.unicen.tp2.schema.Career;
+import jakarta.persistence.TypedQuery;
 
 public class CareerRepositoryPostgres implements CareerRepository {
 
@@ -43,6 +45,26 @@ public class CareerRepositoryPostgres implements CareerRepository {
         }
         
         return dtos;
+    }
+
+    @Override
+
+    public List<CareerReportDTO> reportCareerWithStudentsInfo() {
+
+        String hql = "SELECT new edu.unicen.tp2.dto.CareerReportDTO(c.name, "
+        + "EXTRACT(YEAR FROM COALESCE(  sc.enrolledDate, sc.graduatedDate)), "
+        + "COUNT(sc.student), "
+        + "COUNT(sc.graduatedDate)) "
+        + "FROM StudentCareer sc "
+        + "JOIN sc.career c "
+        + "WHERE sc.enrolledDate IS NOT NULL OR sc.graduatedDate IS NOT NULL "
+        + "GROUP BY c.name, EXTRACT(YEAR FROM COALESCE( sc.enrolledDate, sc.graduatedDate)) "
+        + "ORDER BY c.name ASC, EXTRACT(YEAR FROM COALESCE( sc.enrolledDate, sc.graduatedDate)) desc";
+
+        Query<CareerReportDTO> query = session.createQuery(hql, CareerReportDTO.class);
+
+        return query.getResultList();
+            
     }
     
 }
