@@ -3,10 +3,10 @@ package edu.unicen.tp2.repositories.impl.postgres;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import edu.unicen.tp2.repositories.StudentsRepository;
 import edu.unicen.tp2.schema.Student;
 import edu.unicen.tp2.schema.StudentCareer;
-import jakarta.persistence.TypedQuery;
 
 public class StudentsRepositoryPostgres implements StudentsRepository {
     private final Session session;
@@ -17,8 +17,16 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
 
     @Override
     public List<Student> findAllOrderBy(String fieldName) {
-        TypedQuery<Student> query = session.createQuery(
-                "SELECT s FROM Student s ORDER BY s." + fieldName, Student.class);
+        Query<Student> query = session
+                .createQuery("SELECT s FROM Student s ORDER BY s." + fieldName, Student.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> findAllByGender(String gender) {
+        Query<Student> query = session
+                .createQuery("SELECT s FROM Student s WHERE s.gender = :gender", Student.class);
+        query.setParameter("gender", gender);
         return query.getResultList();
     }
 

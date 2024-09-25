@@ -49,4 +49,15 @@ public class Main {
                 .collect(Collectors.joining(" *** "));
         log.info("Estudiantes ordenados por {}: {}", orderBy, students);
     }
+
+    /**
+     * b.5) recuperar todos los estudiantes, en base a su género.
+     */
+    public static void recuperarEstudiantesPorGenero(StudentService sv, String gender) {
+        var students = sv
+                .findByGender(gender).stream().map(s -> String.format("%s %s - (%s)",
+                        s.getFirstName(), s.getLastName(), s.getDocumentNumber()))
+                .collect(Collectors.joining(" *** "));
+        log.info("Estudiantes de género {}: {}", gender, students);
+    }
 }
