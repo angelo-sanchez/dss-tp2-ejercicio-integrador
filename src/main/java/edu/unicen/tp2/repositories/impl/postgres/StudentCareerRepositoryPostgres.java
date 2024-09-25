@@ -37,9 +37,6 @@ public class StudentCareerRepositoryPostgres implements StudentCareerRepository 
         studentCareer.setCareer(career);
         studentCareer.setStudent(student);
 
-        studentCareer.setGraduated(false);
-        studentCareer.setYearsEnrolled(0);
-
         session.persist(studentCareer);
 
         tx.commit();

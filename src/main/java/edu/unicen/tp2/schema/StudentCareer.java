@@ -1,5 +1,7 @@
 package edu.unicen.tp2.schema;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,11 +20,16 @@ public class StudentCareer {
     @JoinColumn(name = "career_id", nullable = false)
     private Career career;
 
-    @Column(name = "years_enrolled", nullable = false)
-    private Integer yearsEnrolled;
+    @Column(name = "enrolled_date", nullable = false)
+    private LocalDateTime enrolledDate ;
 
-    @Column(name = "graduated", nullable = false)
-    private Boolean graduated = false;
+    @Column(name = "graduated_date", nullable = true)
+    private LocalDateTime graduatedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.enrolledDate = LocalDateTime.now();
+    }
 
     public StudentCareerId getId() {
         return id;
@@ -48,20 +55,20 @@ public class StudentCareer {
         this.career = career;
     }
 
-    public Integer getYearsEnrolled() {
-        return yearsEnrolled;
+    public LocalDateTime getEnrolledDate() {
+        return enrolledDate;
     }
 
-    public void setYearsEnrolled(Integer yearsEnrolled) {
-        this.yearsEnrolled = yearsEnrolled;
+    public void setYearsEnrolled(LocalDateTime enrolledDate) {
+        this.enrolledDate = enrolledDate;
     }
 
-    public Boolean getGraduated() {
-        return graduated;
+    public LocalDateTime getGraduated() {
+        return graduatedDate;
     }
 
-    public void setGraduated(Boolean graduated) {
-        this.graduated = graduated;
+    public void setGraduated(LocalDateTime graduatedDate) {
+        this.graduatedDate = graduatedDate;
     }
 
 }
