@@ -1,0 +1,155 @@
+classDiagram
+    direction RL
+    class Student {
+        <<Entity>>
+        - Long id
+        - String firstName
+        - String lastName
+        - String documentNumber
+        - String gender
+        - String universityBookNumber
+        - String cityOfResidence
+        - Integer age
+        + getters()
+        + setters()
+    }
+    class Career {
+        <<Entity>>
+        - Long id
+        - String name
+        - List~StudentCareer~ studentCareers
+        + getters()
+        + setters()
+    }
+    class StudentCareer {
+        <<Entity>>
+        - StudentCareerId id
+        - Student student
+        - Career career
+        - Date enrolledDate
+        - Date graduatedDate
+        + getters()
+        + setters()
+    }
+    class StudentCareerId {
+        - Long studentId
+        - Long careerId
+        + getStudentId() Long
+        + setStudentId(Long studentId)
+        + getCareerId() Long
+        + setCareerId(Long careerId)
+    }
+    class Validator {
+        <<abstract>>
+        # Logger log $
+        + isValid(String value) boolean *
+    }
+    class GenderValidator{
+        + getInstance() GenderValidator $
+        + isValid(String value) boolean
+    }
+    class StudentAttributeValidator {
+        - Set~String~ validAttributeNames
+        + isValid(String value) boolean
+    }
+    class ValidatorFactory {
+        <<Factory>>
+        + getValidator(String attribute) Validator $
+    }
+    class StudentService {
+        <<Service>>
+        - StudentsRepository studentRepository
+        + createStudent(...) Student
+        + findByGender(String gender) List~Student~
+        + getStudents(String orderBy) List~Student~
+        + findByCareerAndCity(Long careerId, String city) List~Student~
+        + findOneByUniversityBookNumber(String universityBookNumber) Student
+    }
+    class CareerService {
+        <<Service>>
+        - CareerRepository carreerRepository
+        + findCareersWithStudentCount() List~CareerInscriptsDTO~
+    }
+    class StudentCareerService {
+        <<Service>>
+        - StudentsRepository studentsRepository
+        - CareerRepository careerRepository
+        - StudentCareerRepository studentCareerRepository
+        + addStudentToCareer(long studentId, long careerId) StudentCareer
+    }
+    class RepositoryFactory {
+        <<abstract>>
+        - RepositoryFactory postgreSqlRepositoryFactory $
+        + getRepositoryFactory(int whichFactory) RepositoryFactory $
+        + getStudentsRepository() StudentRepository *
+        + getCareerRepository() CareerRepository *
+        + getStudentCareerRepository() StudentCareerRepository *
+        + closeConnection() *
+    }
+    class PostgreSqlRepositoryFactory {
+        - Session session
+        + getStudentsRepository() StudentRepository
+        + getCareerRepository() CareerRepository
+        + getStudentCareerRepository() StudentCareerRepository
+        + closeConnection()
+    }
+    class StudentsRepository {
+        <<interface>>
+        + findAllOrderBy(String fieldName) List~Student~ *
+        + findAllByGender(String gender) List~Student~ *
+        + findAllByCareerAndCity(Long careerId, String city) List~Student~ *
+        + findById(long id) Student *
+        + findOneByUniversityBookNumber(String universityBookNumber) Student *
+        + save(Student student) Student *
+    }
+    class StudentsRepositoryPostgres {
+        - Session session
+        + findAllOrderBy(String fieldName) List~Student~
+        + findAllByGender(String gender) List~Student~
+        + findAllByCareerAndCity(Long careerId, String city) List~Student~
+        + findById(long id) Student
+        + findOneByUniversityBookNumber(String universityBookNumber) Student
+        + save(Student student) Student
+    }
+    class CareerRepository {
+        <<interface>>
+        + findById(long id) Career *
+        + findCareersWithStudentCount() List~CareerInscriptsDTO~ *
+    }
+    class CareerRepositoryPostgres {
+        - Session session
+        + findById(long id) Career
+        + findCareersWithStudentCount() List~CareerInscriptsDTO~
+    }
+    class StudentCareerRepository {
+        <<interface>>
+        + save(Student student, Career career) StudentCareer *
+    }
+    class StudentCareerRepositoryPostgres {
+        - Session session
+        + save(Student student, Career career) StudentCareer
+    }
+    Student "1" -- "0..*" StudentCareer : has
+    Career "1" -- "0..*" StudentCareer : has
+    StudentCareer "1" -- "1" StudentCareerId : uses
+    StudentCareer "1" -- "1" Student : belongs to
+    StudentCareer "1" -- "1" Career : belongs to
+    GenderValidator --|> Validator
+    StudentAttributeValidator --|> Validator
+    ValidatorFactory --> GenderValidator : creates
+    ValidatorFactory --> StudentAttributeValidator : creates
+    StudentService --> Student : creates
+    StudentService ..> ValidatorFactory : uses
+    StudentService ..> Validator : uses
+    StudentService -- StudentsRepository : contains
+    CareerService -- CareerRepository : contains
+    StudentCareerService -- CareerRepository : contains
+    StudentCareerService -- StudentsRepository : contains
+    StudentCareerService -- StudentCareerRepository : contains
+    PostgreSqlRepositoryFactory <|-- RepositoryFactory
+    StudentCareerRepositoryPostgres --|> StudentCareerRepository
+    CareerRepositoryPostgres --|> CareerRepository
+    StudentsRepositoryPostgres --|> StudentsRepository
+    PostgreSqlRepositoryFactory --> StudentCareerRepositoryPostgres : creates
+    PostgreSqlRepositoryFactory --> StudentsRepositoryPostgres : creates
+    PostgreSqlRepositoryFactory --> CareerRepositoryPostgres : creates

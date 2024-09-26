@@ -1,0 +1,56 @@
+classDiagram
+    object Main
+    RepositoryFactory repositoryFactory
+    CareerRepository careerRepository
+    StudentsRepository studentsRepository
+    StudentCareerRepository studentCareerRepository
+    CareerService careerService
+    StudentService studentService
+    StudentCareerService studentCareerService
+    GenderValidator genderValidator
+    StudentAttributeValidator studentAttributeValidator
+
+    repositoryFactory : PostgreSqlRepositoryFactory this
+    repositoryFactory : Session session
+    
+    careerRepository : CareerRepositoryPostgres this
+    careerRepository : Session session
+
+    studentsRepository : StudentsRepositoryPostgres this
+    studentsRepository : Session session
+
+    studentCareerRepository : StudentCareerRepositoryPostgres this
+    studentCareerRepository : Session session
+
+    careerService : CareerService this
+    careerService : CareerRepositoryPostgres careerRepository
+    
+    studentService : StudentService this
+    studentService : StudentsRepositoryPostgres studentsRepository
+
+    studentCareerService : StudentCareerService this
+    studentCareerService : CareerRepositoryPostgres careerRepository
+    studentCareerService : StudentsRepositoryPostgres studentsRepository
+    studentCareerService : StudentCareerServicePostgress studentCareerService
+
+    genderValidator : GenderValidator this
+
+    studentAttributeValidator : StudentAttributeValidator this
+
+    Main --> repositoryFactory : getRepositoryFactory()
+    repositoryFactory --> careerRepository : getCareerRepository()
+    repositoryFactory --> studentsRepository : getStudentsRepository()
+    repositoryFactory --> studentCareerRepository : getStudentCareerRepository()
+    Main --> careerRepository : uses
+    Main --> studentsRepository : uses
+    Main --> studentCareerRepository : uses
+    Main --> careerService : creates
+    Main --> studentService : creates
+    Main --> studentCareerService : creates
+    careerService --> careerRepository : contains
+    studentService --> studentsRepository : contains
+    studentCareerService --> studentsRepository : uses
+    studentCareerService --> careerRepository : uses
+    studentCareerService --> studentCareerRepository : uses
+    studentService ..> genderValidator : uses
+    studentService ..> studentAttributeValidator : uses
