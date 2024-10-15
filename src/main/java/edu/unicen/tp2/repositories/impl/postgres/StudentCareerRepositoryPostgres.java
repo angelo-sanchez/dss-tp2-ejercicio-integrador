@@ -8,6 +8,7 @@ import edu.unicen.tp2.schema.Career;
 import edu.unicen.tp2.schema.Student;
 import edu.unicen.tp2.schema.StudentCareer;
 import edu.unicen.tp2.schema.StudentCareerId;
+import java.util.List;
 
 public class StudentCareerRepositoryPostgres implements StudentCareerRepository {
 
@@ -44,6 +45,30 @@ public class StudentCareerRepositoryPostgres implements StudentCareerRepository 
         return studentCareer;
         
 
+    }
+
+    @Override
+    public StudentCareer save(StudentCareer entity) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
+
+    @Override
+    public StudentCareer findById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    @Override
+    public void delete(StudentCareer entity) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public List<StudentCareer> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
     
 }

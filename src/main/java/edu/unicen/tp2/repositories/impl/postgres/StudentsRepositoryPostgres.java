@@ -6,7 +6,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import edu.unicen.tp2.repositories.StudentsRepository;
 import edu.unicen.tp2.schema.Student;
-import edu.unicen.tp2.schema.StudentCareer;
 
 public class StudentsRepositoryPostgres implements StudentsRepository {
     private final Session session;
@@ -40,7 +39,7 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
     }
 
     @Override
-    public Student findById(long id) {
+    public Student findById(Long id) {
         return session.find(Student.class, id);
     }
 
@@ -62,6 +61,18 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
         session.persist(student);
         tx.commit();
         return student;
+    }
+
+    @Override
+    public void delete(Student entity) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public List<Student> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
 }

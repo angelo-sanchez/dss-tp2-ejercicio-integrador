@@ -6,10 +6,7 @@ import edu.unicen.tp2.dto.CareerInscriptsDTO;
 import edu.unicen.tp2.dto.CareerReportDTO;
 import edu.unicen.tp2.schema.Career;
 
-public interface CareerRepository {
-    public Career findById(long id);
-
-    public List<CareerInscriptsDTO> findCareersWithStudentCount();
-
-    public List<CareerReportDTO> reportCareerWithStudentsInfo();
+public interface CareerRepository extends BaseRepository<Career, Long> {
+    List<CareerInscriptsDTO> findCareersWithStudentCount();
+    List<CareerReportDTO> reportCareerWithStudentsInfo();
 }
