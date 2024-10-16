@@ -8,21 +8,17 @@ import org.hibernate.query.Query;
 
 import edu.unicen.tp2.dto.CareerInscriptsDTO;
 import edu.unicen.tp2.dto.CareerReportDTO;
+import edu.unicen.tp2.repositories.BaseJpaRepository;
 import edu.unicen.tp2.repositories.CareerRepository;
 import edu.unicen.tp2.schema.Career;
 
-public class CareerRepositoryPostgres implements CareerRepository {
+public class CareerRepositoryPostgres extends BaseJpaRepository<Career, Long> implements CareerRepository {
 
-    Session session;
 
     public CareerRepositoryPostgres(Session session) {
-        this.session = session;
+        super(session, Career.class);
     }
 
-    @Override
-    public Career findById(Long id) {
-        return session.find(Career.class, id);
-    }
 
     @Override
     public List<CareerInscriptsDTO> findCareersWithStudentCount() {
@@ -63,24 +59,6 @@ public class CareerRepositoryPostgres implements CareerRepository {
 
         return query.getResultList();
             
-    }
-
-    @Override
-    public Career save(Career entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
-
-    @Override
-    public void delete(Career entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
-    @Override
-    public List<Career> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 }
 

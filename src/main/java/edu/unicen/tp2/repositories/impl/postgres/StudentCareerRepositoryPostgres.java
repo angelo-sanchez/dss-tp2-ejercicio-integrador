@@ -3,19 +3,18 @@ package edu.unicen.tp2.repositories.impl.postgres;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.unicen.tp2.repositories.BaseJpaRepository;
 import edu.unicen.tp2.repositories.StudentCareerRepository;
 import edu.unicen.tp2.schema.Career;
 import edu.unicen.tp2.schema.Student;
 import edu.unicen.tp2.schema.StudentCareer;
 import edu.unicen.tp2.schema.StudentCareerId;
-import java.util.List;
 
-public class StudentCareerRepositoryPostgres implements StudentCareerRepository {
+public class StudentCareerRepositoryPostgres extends BaseJpaRepository<StudentCareer, StudentCareerId> implements StudentCareerRepository {
 
-    private Session session;
 
     public StudentCareerRepositoryPostgres(Session session) {
-        this.session = session;
+        super(session, StudentCareer.class);
     }
 
     @Override
@@ -29,10 +28,7 @@ public class StudentCareerRepositoryPostgres implements StudentCareerRepository 
 
         var studentCareer = new StudentCareer();
         
-        var studentCarerId = new StudentCareerId();
-
-        studentCarerId.setCareerId(career.getId());
-        studentCarerId.setStudentId(student.getId());
+        var studentCarerId = new StudentCareerId(student.getId(), career.getId());
         
         studentCareer.setId(studentCarerId);
         studentCareer.setCareer(career);
@@ -47,28 +43,5 @@ public class StudentCareerRepositoryPostgres implements StudentCareerRepository 
 
     }
 
-    @Override
-    public StudentCareer save(StudentCareer entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
-
-    @Override
-    public StudentCareer findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
-
-    @Override
-    public void delete(StudentCareer entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
-    @Override
-    public List<StudentCareer> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
     
 }

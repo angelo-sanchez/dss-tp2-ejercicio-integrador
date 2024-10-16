@@ -4,14 +4,15 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import edu.unicen.tp2.repositories.BaseJpaRepository;
 import edu.unicen.tp2.repositories.StudentsRepository;
 import edu.unicen.tp2.schema.Student;
 
-public class StudentsRepositoryPostgres implements StudentsRepository {
-    private final Session session;
+public class StudentsRepositoryPostgres extends BaseJpaRepository<Student, Long> implements StudentsRepository {
 
     public StudentsRepositoryPostgres(Session session) {
-        this.session = session;
+        super(session, Student.class);
     }
 
     @Override
@@ -38,10 +39,6 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
         return query.getResultList();
     }
 
-    @Override
-    public Student findById(Long id) {
-        return session.find(Student.class, id);
-    }
 
     @Override
     public Student findOneByUniversityBookNumber(String universityBookNumber) {
@@ -54,25 +51,5 @@ public class StudentsRepositoryPostgres implements StudentsRepository {
                 return null; // En caso de que haya una excepción, retornamos null
             } 
         }
-
-    @Override
-    public Student save(Student student) {
-        Transaction tx = session.beginTransaction();
-        session.persist(student);
-        tx.commit();
-        return student;
-    }
-
-    @Override
-    public void delete(Student entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
-    @Override
-    public List<Student> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
 
 }
