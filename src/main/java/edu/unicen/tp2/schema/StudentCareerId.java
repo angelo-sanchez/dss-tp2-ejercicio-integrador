@@ -15,6 +15,11 @@ public class StudentCareerId implements java.io.Serializable {
     @Column(name = "career_id", nullable = false)
     private Long careerId;
 
+    public StudentCareerId(Long studentId, Long careerId) {
+        this.studentId = studentId;
+        this.careerId = careerId;
+    }
+
     public Long getStudentId() {
         return studentId;
     }
