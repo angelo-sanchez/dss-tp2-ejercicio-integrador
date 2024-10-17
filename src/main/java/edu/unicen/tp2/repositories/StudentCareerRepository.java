@@ -5,6 +5,6 @@ import edu.unicen.tp2.schema.Student;
 import edu.unicen.tp2.schema.StudentCareer;
 import edu.unicen.tp2.schema.StudentCareerId;
 
-public interface StudentCareerRepository extends BaseRepository<StudentCareer, StudentCareerId> {
+public interface StudentCareerRepository {
     StudentCareer save(Student student, Career career);
 }
